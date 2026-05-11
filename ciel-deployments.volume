@@ -1,0 +1,7 @@
+# ============================================================
+#  Quadlet Volume — Fedora 44 / systemd
+#  Copier dans : /etc/containers/systemd/ciel-deployments.volume
+# ============================================================
+
+[Volume]
+Driver=local

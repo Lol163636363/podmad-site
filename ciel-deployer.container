@@ -1,0 +1,32 @@
+# ============================================================
+#  Quadlet — Fedora 44 / systemd
+#  Copier ce fichier dans :
+#    /etc/containers/systemd/ciel-deployer.container
+#  Puis : systemctl daemon-reload && systemctl start ciel-deployer
+# ============================================================
+
+[Unit]
+Description=CIEL Portfolio Manager
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+# Image construite localement
+Image=localhost/ciel-deployer:latest
+
+# Port : le serveur Fedora écoute sur 8080, redirige vers le 80 du conteneur
+PublishPort=8080:80
+
+# Volume persistant — :Z applique le bon contexte SELinux automatiquement
+Volume=ciel-deployments.volume:/var/www/html/deployments:Z
+
+# Timezone
+Environment=TZ=Europe/Paris
+
+# Redémarrage automatique
+[Service]
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target default.target
